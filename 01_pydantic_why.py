@@ -3,16 +3,23 @@ from typing import List,Dict,Optional , Annotated
 
 
 class Patient(BaseModel): # it is a pydantic class  , bydefault the all fields are required it means  when you create a data of user all fields are required if not its throw error.
+    
     # name:str=Field (max_length=50)# max_length it is custom constraint,you limit max word by 50 in string.
-    name: Annotated[str, Field(max_length=50,title='name of the patient', description='give name in less than 50 characters', examples=['nitish','amit'])]
+    name: Annotated[str, Field(max_length=50,title='name of the patient', description='give name in less than 50 characters', examples=['nitish','amit'])] # we can set meta data via using Annotated and Field combine
+
     email:EmailStr #it is a pure example of data validation , by using EmailStr from pydantic ,  you dont have to worry about email validation in your code, its a built in data validator type.
     linkedin_url:AnyUrl
+
     age:int=Field(gt=0,lt=120) # we can use Field for custom data validation via using custom constraints like gt,ge,lt,le.
+
     # weight:float=Field(gt=0) # we can use Field for custom data validation via using custom constraints like gt,ge,lt,le.
-    weight:Annotated[float,Field(gt=0,lt=120,strict=True)]
+    weight:Annotated[float,Field(gt=0,lt=120,strict=True)] # here we can see via using Annotated and field we can set (strict=True), its overrite auto type conversation.
     # married:Optional[bool]=None
+
     married:Annotated[Optional[bool],Field(default=None)]
+
     allergies:List[str]=Field(max_length=5) #two level data type validation by use list[str],also use custom constraints by using Field(max_length=5).
+
     contact_details:Dict[str,str]  #two level data type validation by use this dict[str,str] 
 
 
